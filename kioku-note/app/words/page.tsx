@@ -1,4 +1,5 @@
 import { getNotionData } from "@/apis/route";
+import WordCard from "../components/WordCard";
 
 export default async function Page() {
   const data = await getNotionData();
@@ -26,18 +27,12 @@ export default async function Page() {
         {/* 단어 리스트 */}
         <div className="space-y-6">
           {words.map((item: any, index: number) => (
-            <div
+            <WordCard
               key={index}
-              className="border border-[#e5e5e5] rounded-lg p-5 hover:shadow-md transition"
-            >
-              <p className="text-lg font-medium">{item.word}</p>
-
-              <p className="text-sm text-[#666] mt-2">{item.meaning}</p>
-
-              {item.memo && (
-                <p className="text-xs text-[#999] mt-3">{item.memo}</p>
-              )}
-            </div>
+              word={item.word}
+              meaning={item.meaning}
+              memo={item.memo}
+            />
           ))}
         </div>
       </div>
