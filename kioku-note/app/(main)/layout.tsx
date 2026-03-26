@@ -1,4 +1,5 @@
 import Title from "../components/Title";
+import BottomNav from "../components/BottomNav";
 
 export default function MainLayout({
   children,
@@ -6,16 +7,19 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center py-20">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-xl px-8 py-10">
-        
-        <Title
-          title="기억 노트"
-          subtitle="記憶ノート"
-          romanized="kioku note"
-        />
+    <div className="min-h-screen bg-[#f5f5f5] flex justify-center">
+      <div className="w-full max-w-md min-h-screen bg-white flex flex-col">
+        <div className="px-6 pt-10">
+          <Title
+            title="기억 노트"
+            subtitle="記憶ノート"
+            romanized="kioku note"
+          />
+        </div>
 
-        {children}
+        <div className="flex-1 px-6 pb-24">{children}</div>
+
+        <BottomNav />
       </div>
     </div>
   );
