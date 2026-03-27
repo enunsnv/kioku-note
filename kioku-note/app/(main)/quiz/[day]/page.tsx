@@ -7,7 +7,11 @@ export default async function QuizPage({
   params: Promise<{ day: string }>;
 }) {
   const { day } = await params;
+
   const dayNumber = Number(day);
+  if (isNaN(dayNumber) || dayNumber < 1) {
+    throw new Error(`Invalid day param: ${day}`);
+  }
 
   const data = await getNotionData();
 
@@ -16,11 +20,8 @@ export default async function QuizPage({
     meaning: page.properties["주요뜻"]?.rich_text?.[0]?.plain_text || "",
   }));
 
-  const start = (day - 1) * 10;
-  const end = day * 10;
-
-  console.log("day:", day);
-  console.log("start:", start, "end:", end);
+  const start = (dayNumber - 1) * 10;
+  const end = dayNumber * 10;
 
   const quizzes = words.slice(start, end).map((w, _, arr) => {
     const wrong = arr
@@ -39,7 +40,7 @@ export default async function QuizPage({
 
   return (
     <div className="py-10">
-      <QuizContainer key={day} quizzes={quizzes} day={day} />
+      <QuizContainer key={dayNumber} quizzes={quizzes} day={dayNumber} />
     </div>
   );
 }
