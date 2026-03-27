@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 type DayCardProps = {
   day: number;
+  progress: number;
 };
 
 export default function DayCard({ day }: DayCardProps) {
