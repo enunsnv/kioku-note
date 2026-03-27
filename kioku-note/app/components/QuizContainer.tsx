@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import QuizCard from "./QuizCard";
 
 type Quiz = {
@@ -16,9 +17,12 @@ export default function QuizContainer({
   quizzes: Quiz[];
   day?: number;
 }) {
+  const router = useRouter();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -30,38 +34,46 @@ export default function QuizContainer({
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => prev + 1);
-    setAnswered(false);
+    if (currentIndex + 1 >= quizzes.length) {
+      setIsFinished(true);
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+      setAnswered(false);
+    }
   };
 
   useEffect(() => {
-    setCurrentIndex(0);
-    setScore(0);
-    setAnswered(false);
-  }, [day]);
-
-  useEffect(() => {
-    if (!day) return;
-
-    if (currentIndex !== quizzes.length) return;
+    if (!day || !isFinished) return;
 
     const percent = Math.round((score / quizzes.length) * 100);
 
     const saved = JSON.parse(localStorage.getItem("progress") || "{}");
-
     const key = String(day);
-    saved[key] = percent; // ⭐ Math.max 제거 (덮어쓰기)
+
+    saved[key] = percent;
 
     localStorage.setItem("progress", JSON.stringify(saved));
-  }, [currentIndex, day, quizzes.length, score]);
+  }, [isFinished, day, score, quizzes.length]);
 
-  if (currentIndex >= quizzes.length) {
+  if (isFinished) {
+    const percent = Math.round((score / quizzes.length) * 100);
+
     return (
-      <div className="text-center">
-        <p className="text-xl font-semibold">퀴즈 완료 🎉</p>
-        <p className="mt-3">
+      <div className="flex flex-col items-center justify-center mt-20 text-center animate-fadeIn">
+        <p className="text-2xl font-bold mb-4">퀴즈 완료 🎉</p>
+
+        <p className="text-lg">
           점수: {score} / {quizzes.length}
         </p>
+
+        <p className="text-sm text-[#666] mt-2">{percent}% 달성</p>
+
+        <button
+          onClick={() => router.push("/home")}
+          className="mt-6 px-6 py-3 bg-black text-white rounded-md hover:opacity-90 transition"
+        >
+          홈으로 ホームへ →
+        </button>
       </div>
     );
   }
