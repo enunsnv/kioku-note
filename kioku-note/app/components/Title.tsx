@@ -13,7 +13,7 @@ export default function Title({ title, subtitle, romanized }: TitleProps) {
         <p className="text-[13px] text-[#888888] mt-1">{romanized}</p>
       )}
 
-      <div className="w-9 h-[1px] bg-[#1a1a1a] mx-auto mt-6 mb-10" />
+      <div className="w-9 h-[1px] bg-[#1a1a1a] mx-auto mt-6 mb-3" />
     </div>
   );
 }

@@ -1,7 +1,14 @@
 import { getNotionData } from "@/apis/route";
 import QuizContainer from "@/app/components/QuizContainer";
 
-export default async function QuizPage() {
+export default async function QuizPage({
+  params,
+}: {
+  params: Promise<{ day: string }>;
+}) {
+  const { day } = await params;
+  const dayNumber = Number(day);
+
   const data = await getNotionData();
 
   const words = data.map((page: any) => ({
@@ -9,7 +16,13 @@ export default async function QuizPage() {
     meaning: page.properties["주요뜻"]?.rich_text?.[0]?.plain_text || "",
   }));
 
-  const quizzes = words.slice(0, 10).map((w, _, arr) => {
+  const start = (day - 1) * 10;
+  const end = day * 10;
+
+  console.log("day:", day);
+  console.log("start:", start, "end:", end);
+
+  const quizzes = words.slice(start, end).map((w, _, arr) => {
     const wrong = arr
       .filter((x) => x.meaning !== w.meaning)
       .slice(0, 3)
@@ -26,7 +39,7 @@ export default async function QuizPage() {
 
   return (
     <div className="py-10">
-      <QuizContainer quizzes={quizzes} />
+      <QuizContainer key={day} quizzes={quizzes} day={day} />
     </div>
   );
 }
