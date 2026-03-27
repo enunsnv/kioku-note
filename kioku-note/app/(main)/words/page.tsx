@@ -13,7 +13,7 @@ export default async function Page() {
   });
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center py-5">
+    <div className="min-h-screen flex justify-center py-5">
       {/* 단어 리스트 */}
       <div className="space-y-6">
         {words.map((item: any, index: number) => (

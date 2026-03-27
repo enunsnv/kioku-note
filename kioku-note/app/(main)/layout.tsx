@@ -7,7 +7,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex justify-center">
+    <div className="min-h-screen flex justify-center">
       <div className="w-full max-w-md min-h-screen bg-white flex flex-col">
         <div className="px-6 pt-10">
           <Title

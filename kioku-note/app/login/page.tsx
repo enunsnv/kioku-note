@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       {/* 카드 컨테이너 */}
       <div
         className="

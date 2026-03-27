@@ -7,8 +7,8 @@ export default function Page() {
   }));
 
   return (
-    <div className="min-h-screen flex justify-center py-5 bg-[#f5f5f5]">
-      <div className="w-full max-w-md space-y-4">
+    <div className="min-h-screen flex justify-center py-8">
+      <div className="w-full max-w-md flex flex-col space-y-4">
         {days.map((d) => (
           <DayCard key={d.day} day={d.day} progress={d.progress} />
         ))}
