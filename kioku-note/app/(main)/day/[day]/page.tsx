@@ -19,14 +19,11 @@ export default async function Page({
     memo: page.properties["메모"]?.rich_text?.[0]?.plain_text || "",
   }));
 
-  const start = (dayNumber - 1) * 10;
-  const end = dayNumber * 10;
-
-  const dayWords = words.slice(start, end);
+  const dayWords = words.slice(0, 10);
 
   return (
     <div className="space-y-5">
-      <Link href={`/quiz?day=${dayNumber}`}>
+      <Link href={`/quiz/${dayNumber}`}>
         <button className="w-full py-3 bg-black text-white rounded-md mb-5">
           퀴즈 시작 : クイズ スタート →
         </button>
