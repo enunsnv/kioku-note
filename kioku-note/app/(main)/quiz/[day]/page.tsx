@@ -1,6 +1,10 @@
 import { getNotionData } from "@/apis/route";
 import QuizContainer from "@/app/components/QuizContainer";
 
+function shuffle<T>(array: T[]) {
+  return [...array].sort(() => Math.random() - 0.5);
+}
+
 export default async function QuizPage({
   params,
 }: {
@@ -23,18 +27,17 @@ export default async function QuizPage({
   const start = (dayNumber - 1) * 10;
   const end = dayNumber * 10;
 
-  const quizzes = words.slice(start, end).map((w, _, arr) => {
-    const wrong = arr
-      .filter((x) => x.meaning !== w.meaning)
+  const currentWords = words.slice(start, end);
+
+  const quizzes = currentWords.map((w) => {
+    const wrong = shuffle(words.filter((x) => x.meaning !== w.meaning))
       .slice(0, 3)
       .map((x) => x.meaning);
-
-    const options = [w.meaning, ...wrong].sort(() => Math.random() - 0.5);
 
     return {
       question: w.word,
       answer: w.meaning,
-      options,
+      options: shuffle([w.meaning, ...wrong]),
     };
   });
 
