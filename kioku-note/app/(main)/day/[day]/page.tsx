@@ -19,7 +19,9 @@ export default async function Page({
     memo: page.properties["메모"]?.rich_text?.[0]?.plain_text || "",
   }));
 
-  const dayWords = words.slice(0, 10);
+  const start = (dayNumber - 1) * 10;
+  const end = dayNumber * 10;
+  const dayWords = words.slice(start, end);
 
   return (
     <div className="space-y-5">
